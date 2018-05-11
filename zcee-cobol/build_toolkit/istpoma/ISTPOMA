@@ -1,0 +1,38 @@
+       01 ist-portfolio-manager.
+           05 action           pic x(2).
+               88  createPortfolio       value "CP".
+               88  deletePortfolio       value "DP".
+               88  readPortfolio         value "RP".
+               88  queryPortfolio        value "QP".
+               88  createStock           value "CS".
+               88  deleteStock           value "DS".
+           05 debugTran         pic x.
+               88  isDebug               value 'Y'.
+           05 portfolioInfo.
+               09  owner       pic x(32).
+               09  total       PIC S9(11)V9(2) USAGE COMP-3.
+               09  loyalty     pic x(8).
+           05 stockUpdate.
+               09  symbol      pic x(8).
+               09  shares      PIC S9(9) USAGE COMP.
+               09  price       PIC S9(9)V9(2) USAGE COMP-3.
+               09  total       PIC S9(11)V9(2) USAGE COMP-3.
+               09  dateQuoted  pic x(10).
+           05 eyeCatch1        pic x(3).
+           05 stockInfo  OCCURS 32 TIMES.
+               09  symbol      pic x(8).
+               09  shares      PIC S9(9) USAGE COMP.
+               09  price       PIC S9(9)V9(2) USAGE COMP-3.
+               09  total       PIC S9(11)V9(2) USAGE COMP-3.
+               09  dateQuoted  pic x(10).
+           05 eyeCatch2        pic x(3).
+           05  portfolioOutput  OCCURS 32 TIMES.
+               09  owner       pic x(32).
+               09  total       PIC S9(11)V9(2) USAGE COMP-3.
+               09  loyalty     pic x(8).
+           05 eyeCatch3        pic x(3).
+           05 oldLoyalty       pic x(8).
+           05 istreturnmsg     pic x(45).
+           05 ist-flags        Pic X.
+               88  istSuccess            value "Y".
+               88  istFailure            value "N".

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="zCEEM3 server to test API Requestor">
+   <!-- Enable features -->
+   <featureManager>
+      <feature>zosconnect:zosConnect-2.0</feature>
+      <feature>zosconnect:zosConnectCommands-1.0</feature>
+      <feature>appSecurity-2.0</feature>
+      <feature>zosLocalAdapters-1.0</feature>
+      <feature>zosSecurity-1.0</feature>
+      <feature>ssl-1.0</feature>
+   </featureManager>
+   <safRegistry id="saf" />
+   <safAuthorization racRouteLog="ASIS" />
+   <safCredentials profilePrefix="BBGZDFLT" unauthenticatedUser="WSGUEST" />
+   <sslDefault sslRef="DefaultSSLSettings" />
+   <ssl id="DefaultSSLSettings" enabledCiphers="SSL_DHE_RSA_WITH_AES_128_CBC_SHA256 SSL_ECDHE_RSA_WITH_AES_128_CBC_SHA256 SSL_RSA_WITH_AES_128_CBC_SHA256 SSL_DHE_RSA_WITH_AES_128_GCM_SHA256 SSL_ECDHE_RSA_WITH_AES_128_GCM_SHA256 SSL_RSA_WITH_AES_128_GCM_SHA256" clientAuthentication="true" clientAuthenticationSupported="true" trustStoreRef="CellDefaultTrustStore" keyStoreRef="CellDefaultKeyStore" />
+   <keyStore id="CellDefaultKeyStore" readOnly="true" fileBased="false" type="JCERACFKS" password="password" location="safkeyring:///Keyring.LIBERTY" />
+   <keyStore id="CellDefaultTrustStore" readOnly="true" fileBased="false" type="JCERACFKS" password="password" location="safkeyring:///Keyring.LIBERTY" />
+   <zosconnect_zosConnectService id="mlScoman" serviceRef="wolaScoman" serviceDescription="Machine Learning InLine OLTP scoring w/no DFHJSON" dataXformRef="xformJSON2Byte" serviceName="mlScoman" invokeURI="/scoman" />
+   <zosconnect_localAdaptersConnectService id="wolaScoman" serviceName="MLSCOMAN" connectionFactoryRef="wolaCF" registerName="CICSMLA" />
+   <zosconnect_zosConnectService id="mlScomaz" serviceRef="wolaScomaz" serviceDescription="Machine Learning InLine OLTP scoring w/no DFHJSON on Azure" dataXformRef="xformJSON2Byte" serviceName="mlScomaz" invokeURI="/scomaz" />
+   <zosconnect_localAdaptersConnectService id="wolaScomaz" serviceName="MLSCOMAZ" connectionFactoryRef="wolaCF" registerName="CICSMLA" />
+   <zosconnect_zosConnectService id="mlScopm1" serviceRef="wolaScopm1" serviceDescription="Machine Learning PMML model" dataXformRef="xformJSON2Byte" serviceName="mlScopm1" invokeURI="/scopm1" />
+   <zosconnect_localAdaptersConnectService id="wolaScopm1" serviceName="MLSCOPM1" connectionFactoryRef="wolaCF" registerName="CICSMLA" />
+   <zosconnect_zosConnectService id="mlScomaw" serviceRef="wolaScomaw" serviceDescription="Machine Learning InLine OLTP scoring w/no DFHJSON" dataXformRef="xformJSON2Byte" serviceName="mlScomaw" invokeURI="/scomaw" />
+   <zosconnect_localAdaptersConnectService id="wolaScomaw" serviceName="MLSCOMAW" connectionFactoryRef="wolaCF" registerName="CICSMLA" />
+   <zosconnect_zosConnectDataXform id="xformJSON2Byte" responseSchemaSuffix=".json" requestSchemaSuffix=".json" responseSchemaLoc="/opt/cicsjvm/zCEE/json" requestSchemaLoc="/opt/cicsjvm/zCEE/json" bindFileSuffix=".wsbind" bindFileLoc="/opt/cicsjvm/zCEE/bind" />
+   <zosconnect_zosConnectService id="fbLogon" serviceRef="wolaLogon" serviceDescription="Logon" dataXformRef="xformJSON2Byte" serviceName="logon" invokeURI="/logon" />
+   <zosconnect_localAdaptersConnectService id="wolaLogon" serviceName="LOGON" connectionFactoryRef="wolaCF" registerName="CICSMLA" />
+   <zosconnect_zosConnectService id="fbCustomer" serviceRef="wolaCustomer" serviceDescription="Customer" dataXformRef="xformJSON2Byte" serviceName="customer" invokeURI="/customer" />
+   <zosconnect_localAdaptersConnectService id="wolaCustomer" serviceName="CUSTOMER" connectionFactoryRef="wolaCF" registerName="CICSMLA" />
+   <zosconnect_zosConnectService id="fbLogoff" serviceRef="wolaLogoff" serviceDescription="Logoff" dataXformRef="xformJSON2Byte" serviceName="logoff" invokeURI="/logoff" />
+   <zosconnect_localAdaptersConnectService id="wolaLogoff" serviceName="LOGOFF" connectionFactoryRef="wolaCF" registerName="CICSMLA" />
+   <zosconnect_zosConnectService id="fbAccounts" serviceRef="wolaAccounts" serviceDescription="Account actions" dataXformRef="xformJSON2Byte" serviceName="accounts" invokeURI="/accounts" />
+   <zosconnect_localAdaptersConnectService id="wolaAccounts" serviceName="ACCOUNTS" connectionFactoryRef="wolaCF" registerName="CICSMLA" />
+   <zosconnect_zosConnectService id="fbLoyalty" serviceRef="wolaLoyalty" serviceDescription="Loyalty Points actions" dataXformRef="xformJSON2Byte" serviceName="loyaltyPoints" invokeURI="/loyaltyPoints" />
+   <zosconnect_localAdaptersConnectService id="wolaLoyalty" serviceName="LOYPTS" connectionFactoryRef="wolaCF" registerName="CICSMLA" />
+   <zosconnect_zosConnectService id="istpoma" serviceRef="istpoma" serviceDescription="IBM Stock Trader highlight IBM Private Cloud" dataXformRef="xformJSON2Byte" serviceName="istpoma" invokeURI="/istpoma" />
+   <zosconnect_localAdaptersConnectService id="istpoma" serviceName="ISTPOMA" connectionFactoryRef="wolaCF" registerName="CICSICP" />
+   <zosLocalAdapters wolaName3="NAME3" wolaName2="CICSMLA" wolaGroup="GROUP" />
+   -
+   <connectionFactory id="wolaCF" jndiName="eis/ola">
+      <properties.ola />
+   </connectionFactory>
+   <!-- <logging traceSpecification="zosConnect=all" traceFileName="trace.log" maxFileSize="20" maxFiles="10" traceFormat="BASIC"/> -->
+   <logging traceFormat="BASIC" maxFiles="10" maxFileSize="20" traceFileName="trace.log" traceSpecification="*=info" />
+   <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
+   <httpEndpoint id="defaultHttpEndpoint" httpsPort="9446" httpPort="9083" host="*" />
+   <!-- add cors to allow cross origin access, e.g. when using swagger UI to fetch swagger doc from zOS Connect Enterprise Edition -->
+   <cors id="defaultCORSConfig" maxAge="3600" allowCredentials="true" allowedHeaders="Origin, Content-Type, Authorization" allowedMethods="GET, POST, PUT, DELETE, OPTIONS" allowedOrigins="*" domain="/" />
+   <!-- zosConnect APIs -->
+   <!-- <zosconnect_zosConnectAPIs updateTrigger="disabled" pollingRate="5s"/> -->
+   <!-- zosConnect Services -->
+   <!-- <zosconnect_services updateTrigger="disabled" pollingRate="5s"/> -->
+   <!-- applicationMonitor is not applicable for zCEE servers -->
+   <!-- <applicationMonitor updateTrigger="disabled" dropinsEnabled="false"/> -->
+</server>

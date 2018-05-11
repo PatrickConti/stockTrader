@@ -1,0 +1,78 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.1.0 (36652f6)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: hack-stack
+  name: hack-stack
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: hack-stack
+    spec:
+      containers:
+      - env:
+        - name: LOYALTY_HOST
+          value: localhost
+        - name: QUOTE_HOST
+          value: localhost
+        - name: ZCEE_PASS
+          value: fredpwd
+        - name: ZCEE_URL
+          value: https://129.40.117.225:9443
+        - name: ZCEE_USER
+          value: Fred
+        image: cc-z-hack.icp:8500/cc-z-hack/trader
+        name: trader
+        ports:
+        - containerPort: 9080
+        resources: {}
+      - env:
+        - name: QUANDL_KEY
+          value: _2VFhkQ446andCSWu2Mi
+        image: cc-z-hack.icp:8500/cc-z-hack/stock-quote
+        name: stock-quote
+        ports:
+        - containerPort: 9081
+        resources: {}
+      - env:
+        - name: FUNCTIONS_API_KEY
+          value: b8f3e99e-8740-4afa-bf06-c740ad05ea82:J9gGMjk9f3KJomFKzDuAtLJmT6dOXsDVO0UnPFU19h09GwYnUrEX80GaN64K2Jqr
+        - name: FUNCTIONS_URL
+          value: https://openwhisk.ng.bluemix.net/api/v1/namespaces/zcloud_prod/actions/cc-z-hack/LoyaltyToSlack?blocking=true
+        - name: MQ_HOST
+          value: 129.40.117.225
+        - name: MQ_PORT
+          value: "1414"
+        - name: MQ_QM
+          value: MQZL
+        - name: MQ_QUEUE_NAME
+          value: NOTIFICATION
+        image: cc-z-hack.icp:8500/cc-z-hack/notification
+        name: notification
+        ports:
+        - containerPort: 9083
+        resources: {}
+      - env:
+        - name: MQ_HOST
+          value: 129.40.117.225
+        - name: MQ_PORT
+          value: "1414"
+        - name: MQ_QM
+          value: MQZL
+        - name: MQ_QUEUE_NAME
+          value: NOTIFICATION
+        image: cc-z-hack.icp:8500/cc-z-hack/loyalty
+        name: loyalty
+        ports:
+        - containerPort: 9082
+        resources: {}
+      restartPolicy: Always
+status: {}

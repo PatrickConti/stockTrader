@@ -1,0 +1,508 @@
+      * -------------------------------------------------------------
+      *
+      *   Module Name: ACCOUNTS.cbl
+      *
+      *   Description: Business Logic Program for Account Summary
+      *
+      *   Purpose: Retrieve account summary
+      *            Execute Withdraw Transaction
+      *            Execute Deposit Transaction
+      *
+      *        The screen will only handle 6 account records,
+      *        if there are more than 6 records, a message
+      *        indicating more records are available is
+      *        displayed.
+      *
+      *        An error message is displayed if not records
+      *        are retrieved.
+      *        SK: 03/31/10 Modified to init COMAREA structure
+      * -------------------------------------------------------------
+       Identification Division.
+       Program-ID.  ISTPOMA.
+
+       Data Division.
+
+      * -------------------------------------------------------------
+      *Make sure you have SQLCA included in Working-Storage
+       Working-Storage Section.
+
+           EXEC SQL INCLUDE SQLCA END-EXEC.
+
+        COPY ISTPOMA.
+
+        COPY DCLPORT.
+        COPY DCLSTOCK.
+
+       01 TxUtil.
+           05 ArrIdx  PIC S9(4) COMP.
+           05 msgQual    Pic X(20).
+           05 SQLCODEStr Pic X(10).
+
+           05 TxPadding  Pic X(10) VALUE "0000000000".
+           05 TxAccidStr Pic X(9).
+           05 TxLastIDStr Pic X(9).
+           05 TxIDStr Pic X(18).
+           05 TXCharCountAccid Pic 9(15).
+           05 TXCharCountLastid Pic 9(15).
+           05 TXCharCountTxid Pic 9(15).
+           05 InitCount         Pic 9   VALUE 0.
+
+
+      * -------------------------------------------------------------
+       Linkage Section.
+       01 DFHCOMMAREA     Pic X(3000).
+
+      * -------------------------------------------------------------
+       Procedure Division.
+
+           IF EIBCALEN > ZERO
+              MOVE DFHCOMMAREA TO ist-portfolio-manager
+              MOVE SPACES TO istreturnmsg
+              SET istSuccess to true
+              MOVE "EC1" to eyeCatch1
+              MOVE "EC2" to eyeCatch2
+              MOVE "EC3" to eyeCatch3
+           ELSE
+              SET istFailure to true
+              display "Empty CommArea"
+              perform returnErr
+           END-IF
+      * This is for testing, built into APIs, but issue with api fmt
+           SET isDebug to true
+
+           PERFORM InitOutArray
+             varying ArrIdx from 1 by 1 until ArrIdx > 32
+           MOVE "        " TO oldLoyalty
+
+           EVALUATE TRUE
+
+               WHEN createPortfolio
+      *            Create a new Portfolio record
+                   PERFORM create-Portfolio
+
+               WHEN deletePortfolio
+      *            Delete a portfolio and all stocks
+                   PERFORM delete-Portfolio
+
+               WHEN readPortfolio
+      *            Retrieve a portfolio and all stocks within
+                   PERFORM read-Portfolio
+
+               WHEN queryPortfolio
+      *            Query to return portfolios
+                   PERFORM query-Portfolio
+
+               WHEN createStock
+      *            Retrieve a portfolio and all stocks within
+                   PERFORM create-Stock
+
+               WHEN deleteStock
+      *            Retrieve a portfolio and all stocks within
+                   PERFORM delete-Stock
+
+           END-EVALUATE.
+
+      * -------------------------------------------------------------
+      * Create a portfolio row with data from CommArea
+      * -------------------------------------------------------------
+       create-Portfolio.
+           IF isDebug
+               DISPLAY "MJC1 istpoma in create-Portolio:"
+           END-IF
+      * Be sure proper values are returned in input fields not used
+           perform InitStockUpdate
+           MOVE CORRESPONDING portfolioInfo to DCLPORTFOLIO
+           EXEC SQL  INSERT INTO sa.PortFolio
+            (owner, total, loyalty)
+            VALUES (:DCLPORTFOLIO)
+           END-EXEC
+           IF SQLCODE NOT EQUAL TO 0
+               MOVE 'INSERT Portfolio' to msgQual
+               perform returnSqlErr
+           ELSE
+               EXEC CICS SYNCPOINT END-EXEC
+               perform returnGood
+           END-IF
+           .
+
+      * -------------------------------------------------------------
+      * Delete a portfolio row with data from CommArea
+      *  DB2 rules should enforce deletion of associated stocks
+      * -------------------------------------------------------------
+       delete-Portfolio.
+           IF isDebug
+               DISPLAY "MJC1 istpoma in delete-Portolio:"
+           END-IF
+      * Be sure proper values are returned in input fields not used
+           perform InitPortfolio
+           perform initStockUpdate
+           MOVE owner of portfolioInfo to owner of DCLPORTFOLIO
+           EXEC SQL  DELETE FROM sa.PortFolio
+             WHERE OWNER = :DCLPORTFOLIO.owner
+           END-EXEC
+           IF SQLCODE NOT EQUAL TO 0
+               MOVE 'Delete Portfolio' to msgQual
+               perform returnSqlErr
+           ELSE
+               EXEC CICS SYNCPOINT END-EXEC
+               perform returnGood
+           END-IF
+           .
+
+      * -------------------------------------------------------------
+      * Retrieve a portfolio row and all corresponding stock rows
+      * -------------------------------------------------------------
+       read-Portfolio.
+      * Be sure proper values are returned in input fields not used
+           perform InitPortfolio
+           perform InitStockUpdate
+           
+           perform readData4Owner
+           perform returnGood
+           .
+
+      * -------------------------------------------------------------
+      * Retrieve up to 32 portfolio records
+      * -------------------------------------------------------------
+       query-Portfolio.
+      * Be sure proper values are returned in input fields not used
+           perform InitPortfolio
+           perform InitStockUpdate
+           IF isDebug
+            DISPLAY "MJC1 istpoma query-Portfolio"
+           END-IF
+           EXEC SQL declare portCursor cursor for
+               select owner, total, loyalty from  sa.Portfolio
+           END-EXEC
+           exec sql open portCursor end-exec
+           IF isDebug
+             DISPLAY "MJC1 istpoma queryPortfolio: postsql: " SQLCODE
+           END-IF
+           IF SQLCODE NOT EQUAL TO 0
+               MOVE 'QueryPortfolio DclCsr' to msgQual
+               perform returnSqlErr
+           END-IF
+           PERFORM fetchPortfolio
+             varying ArrIdx from 1 by 1 until 
+               (ArrIdx > 32 or SQLCODE NOT EQUAL to 0)
+           if (SQLCODE NOT EQUAL TO 100 and ArrIdx < 32)
+               exec sql close portCursor end-exec
+               MOVE 'Fetching Portfolios' to msgQual
+               perform returnSqlErr
+           end-if
+           exec sql close portCursor end-exec
+           perform returnGood
+           .
+
+      * -------------------------------------------------------------
+      * Retrieve a portfolio row and all corresponding stock rows
+      * -------------------------------------------------------------
+       create-Stock.
+           IF isDebug
+               DISPLAY "MJC1 istpoma in create-Stock:"
+           END-IF
+      * Be sure proper values are returned in input fields not used
+           perform InitPortfolio
+           MOVE CORRESPONDING stockUpdate to DCLSTOCK
+           MOVE OWNER of portfolioInfo to owner of DCLSTOCK
+           EXEC SQL SELECT shares into :DCLSTOCK.shares
+             from sa.stock
+             where owner = :DCLSTOCK.owner
+               and symbol = :DCLSTOCK.symbol
+           END-EXEC
+           IF SQLCODE = 0
+               ADD shares of stockUpdate to shares of DCLSTOCK
+               MULTIPLY shares of DCLSTOCK by price of DCLSTOCK
+                 giving total of DCLSTOCK
+               EXEC SQL UPDATE sa.Stock 
+                 set shares = :DCLSTOCK.shares,
+                     price = :DCLSTOCK.price,
+                     total = :DCLSTOCK.total,
+                     dateQuoted = :DCLSTOCK.dateQuoted
+                 WHERE OWNER = :DCLSTOCK.owner
+                   and symbol = :DCLSTOCK.symbol
+               END-EXEC
+           ELSE  
+      * TODO should check that if it's not 0, it is 100 ... later
+               MULTIPLY shares of DCLSTOCK by price of DCLSTOCK
+                 giving total of DCLSTOCK
+               EXEC SQL  INSERT INTO sa.Stock
+                 (owner, symbol, shares, price, total, dateQuoted)
+                VALUES (:DCLSTOCK)
+               END-EXEC
+           END-IF
+           IF SQLCODE NOT EQUAL TO 0
+               MOVE 'INSERT stock' to msgQual
+               perform returnSqlErr
+           ELSE
+               perform recalcPortfolio
+               MOVE ist-portfolio-manager TO DFHCOMMAREA 
+               perform returnGood
+           END-IF
+           .
+
+      * -------------------------------------------------------------
+      * Delete a stock out of a portfolio
+      *  TODO: Adjust portfolio for balance and loyalty
+      * -------------------------------------------------------------
+       delete-Stock.
+           IF isDebug
+               DISPLAY "MJC1 istpoma in delete-Stock:"
+           END-IF
+      * Be sure proper values are returned in input fields not used
+           perform InitPortfolio
+           perform InitStockUpdate
+           MOVE owner of portfolioInfo to owner of DCLSTOCK
+           move symbol of stockUpdate to symbol of DCLSTOCK
+           EXEC SQL  DELETE FROM sa.Stock
+             WHERE OWNER = :DCLSTOCK.owner
+               and symbol = :DCLSTOCK.symbol
+           END-EXEC
+           IF SQLCODE NOT EQUAL TO 0
+               MOVE 'Delete Portfolio' to msgQual
+               perform returnSqlErr
+           ELSE
+               perform recalcPortfolio
+           END-IF
+           .
+
+      * -------------------------------------------------------------
+      * Stocks have changed, so re-calculate portfolio info
+      * -------------------------------------------------------------
+       recalcPortfolio.
+           IF isDebug
+               DISPLAY "MJC1 istpoma in recalcPortfolio:"
+           END-IF
+           perform readData4Owner
+           MOVE 0.0 to total of portfolioInfo
+           MOVE loyalty of portfolioInfo to oldLoyalty
+           PERFORM addTotals
+             varying ArrIdx from 1 by 1 until 
+               (ArrIdx > 32 or shares of stockInfo(ArrIdx) = 0)
+           EVALUATE TRUE
+              WHEN total of portfolioInfo > 1000000
+                  MOVE 'PLATINUM' to loyalty of portfolioInfo
+              WHEN total of portfolioInfo > 100000
+                  MOVE 'GOLD' to loyalty of portfolioInfo
+              WHEN total of portfolioInfo > 50000
+                  MOVE 'SILVER' to loyalty of portfolioInfo
+              WHEN total of portfolioInfo > 10000
+                  MOVE 'BRONZE' to loyalty of portfolioInfo
+              WHEN OTHER
+                  MOVE 'BASIC' to loyalty of portfolioInfo
+           END-EVALUATE
+           MOVE CORRESPONDING portfolioInfo to DCLPORTFOLIO
+           EXEC SQL UPDATE sa.portfolio 
+             SET total = :DCLPORTFOLIO.total,
+                 loyalty = :DCLPORTFOLIO.loyalty
+             WHERE owner = :DCLPORTFOLIO.owner
+           END-EXEC
+           IF SQLCODE NOT EQUAL TO 0
+               MOVE 'Update Portfolio' to msgQual
+               perform returnSqlErr
+           END-IF
+           EXEC CICS SYNCPOINT END-EXEC
+           perform returnGood
+           .
+
+      * -------------------------------------------------------------
+      * Sum up value of stocks and reflect into portfolio total
+      * -------------------------------------------------------------
+       addTotals.
+           IF isDebug
+               DISPLAY "MJC1 istpoma addTotals: Idx: " ArrIdx
+                 " sTot: " total of stockInfo(ArrIdx)
+                 " pTot: " total of portfolioInfo
+           END-IF
+           ADD total of stockInfo(ArrIdx) to total of portfolioInfo
+           .
+
+      * -------------------------------------------------------------
+      * Retrieve portfolio and stock rows for display or calculation
+      * -------------------------------------------------------------
+       readData4Owner.
+           IF isDebug
+            DISPLAY "MJC1 istpoma readData4Owner: port: " portfolioInfo
+           END-IF
+           MOVE owner of portfolioInfo to owner of DCLPORTFOLIO
+           EXEC SQL  SELECT owner, total, loyalty
+            into :DCLPORTFOLIO
+            FROM sa.PortFolio
+            where owner = :DCLPORTFOLIO.owner
+           END-EXEC
+           IF isDebug
+             DISPLAY "MJC1 istpoma readData4Owner: postsql: " SQLCODE
+           END-IF
+           IF SQLCODE NOT EQUAL TO 0
+               MOVE 'Read Portfolio' to msgQual
+               perform returnSqlErr
+           END-IF
+           MOVE CORRESPONDING DCLPORTFOLIO to portfolioInfo
+           IF isDebug
+             DISPLAY "MJC1 istpoma readData4Owner: "
+              total of DCLPORTFOLIO " loyal: " loyalty of DCLPORTFOLIO
+           END-IF
+           MOVE owner of DCLPORTFOLIO to owner of DCLSTOCK
+           EXEC sql declare stockcursor cursor for
+               select owner, symbol, shares, price,
+                 total, dateQuoted
+               from sa.stock
+               where owner = :DCLSTOCK.owner
+           END-EXEC
+           exec sql open stockcursor end-exec
+
+           PERFORM fetchStock
+             varying ArrIdx from 1 by 1 until 
+               (ArrIdx > 32 or SQLCODE NOT EQUAL to 0)
+           if (SQLCODE NOT EQUAL TO 100 and ArrIdx < 32)
+               exec sql close stockcursor end-exec
+               MOVE 'Fetching Stocks' to msgQual
+               perform returnSqlErr
+           end-if
+           exec sql close stockcursor end-exec
+           .
+
+      * -------------------------------------------------------------
+      * Unexpected SQL code, display and exit
+      * -------------------------------------------------------------
+       returnSqlErr.
+           IF isDebug
+              DISPLAY "MJC1 istpoma returnSqlErr: SqlCode: "
+                SQLCODE " Msg: " msgQual
+           END-IF
+           SET istFailure to true
+           MOVE SQLCODE TO SQLCODEStr
+           STRING "DB2-ERROR ISTPOMA ACCESS:SQLCODE= "
+               DELIMITED BY "  "
+             SQLCODEStr DELIMITED BY size
+             msgQual Delimited by " "
+               INTO istreturnmsg
+           EXEC CICS SYNCPOINT ROLLBACK END-EXEC
+           perform returnErr
+           .
+
+       returnErr.
+           MOVE ist-portfolio-manager TO DFHCOMMAREA 
+           exec cics return END-EXEC
+           .
+
+       returnGood.
+           MOVE ist-portfolio-manager TO DFHCOMMAREA 
+           IF isDebug
+               DISPLAY "MJC1 istpoma in returnGood: CA Len: "
+                 LENGTH OF ist-portfolio-manager
+               DISPLAY "MJC1 istpoma returnGood: portfTot: "
+                 total of portfolioInfo " Stock1: "
+                 total of stockInfo(1) " StupUpdt: "
+                 total of stockUpdate
+               DISPLAY "MJC1 istpoma returnGood: portfPrice: "
+                 price of stockInfo(1) " StupUpdt: "
+                 price of stockUpdate
+               DISPLAY "MJC istpoma returnGood: CA: "
+                 ist-portfolio-manager
+           END-IF
+           EXEC CICS RETURN END-EXEC
+           .
+
+      * -------------------------------------------------------------
+      * Fetch a row for this owner from the stock table
+      * -------------------------------------------------------------
+       fetchStock.
+           EXEC sql fetch stockcursor
+               INTO :DCLSTOCK
+           END-EXEC
+           IF SQLCODE = 0
+               MOVE CORRESPONDING DCLSTOCK to stockInfo(arrIdx)
+               IF isDebug
+                 DISPLAY "MJC1 istpoma fetchStock: Arr: " arrIdx
+                  " symbol: " symbol of stockInfo(arrIdx)
+                  " shares: " shares of stockInfo(arrIdx)
+                  " price: " price of stockInfo(arrIdx)
+                  " total: " total of stockInfo(arrIdx)
+                  " dateQuoted : " dateQuoted of stockInfo(arrIdx)
+               END-IF
+           END-IF
+           .
+
+      * -------------------------------------------------------------
+      * Fetch a row from the portfolio table
+      * -------------------------------------------------------------
+       fetchPortfolio.
+           EXEC sql fetch portCursor
+               INTO :DCLPORTFOLIO
+           END-EXEC
+           IF SQLCODE = 0
+               MOVE CORRESPONDING DCLPORTFOLIO
+                  TO portfolioOutput(arrIdx)
+               IF isDebug
+                 DISPLAY "MJC1 istpoma fetchPortfolio: Arr: " arrIdx
+                  " owner: " owner of portfolioOutput(arrIdx)
+                  " total: " total of portfolioOutput(arrIdx)
+                  " loyalty: " loyalty of portfolioOutput(arrIdx)
+               END-IF
+           END-IF
+           .
+
+
+      * -------------------------------------------------------------
+      * Initialize output so that transformations do not fail
+      * -------------------------------------------------------------
+       InitOutArray.
+            if isdebug
+               display "MJC1 istpoma initOutArray: idx: " arrIdx
+            MOVE 0 to shares of stockInfo(arrIdx)
+            MOVE 0.0 to price of stockInfo(arrIdx)
+            MOVE 0.0 to total of stockInfo(arrIdx)
+            MOVE 0.0 to total of portfolioOutput(arrIdx)
+           .
+
+      * -------------------------------------------------------------
+      * Initialize output so that transformations do not fail
+      * -------------------------------------------------------------
+       InitPortfolio.
+            MOVE 0.0 to total of portfolioInfo
+            .
+ 
+      * -------------------------------------------------------------
+      * Initialize output so that transformations do not fail
+      * -------------------------------------------------------------
+       InitStockUpdate.
+            MOVE 0 to shares of stockUpdate
+            MOVE 0.0 to price of stockUpdate
+            MOVE 0.0 to total of stockUpdate
+            .
+
+
+      *    05 portfolioQuery.
+      *        09  searchArg   pic x(32).
+      *        09  portfolioOutput  OCCURS 32 TIMES.
+      *            12  owner       pic x(32).
+      *            12  total       PIC S9(11)V9(2) USAGE COMP-3.
+      *            12  loyalty     pic x(8).
+
+
+      ******************************************************************
+      * DCLGEN TABLE(SA.PORTFOLIO)                                     *
+      *        LIBRARY(MCASILE.CICS.CPYBOOK(DCLPORT))                  *
+      *        ACTION(REPLACE)                                         *
+      *        LANGUAGE(COBOL)                                         *
+      *        QUOTE                                                   *
+      * ... IS THE DCLGEN COMMAND THAT MADE THE FOLLOWING STATEMENTS   *
+      ******************************************************************
+      *    EXEC SQL DECLARE SA.PORTFOLIO TABLE
+      *    ( OWNER                          CHAR(32) NOT NULL,
+      *      TOTAL                          DECIMAL(13, 2),
+      *      LOYALTY                        CHAR(8)
+      *    ) END-EXEC.
+      ******************************************************************
+      * COBOL DECLARATION FOR TABLE SA.PORTFOLIO                       *
+      ******************************************************************
+      *01  DCLPORTFOLIO.
+      *    10 OWNER                PIC X(32).
+      *    10 TOTAL                PIC S9(11)V9(2) USAGE COMP-3.
+      *    10 LOYALTY              PIC X(8).
+      ******************************************************************
+      * THE NUMBER OF COLUMNS DESCRIBED BY THIS DECLARATION IS 3       *
+      ******************************************************************
+
+

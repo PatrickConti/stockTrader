@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.1.0 (36652f6)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: loyalty
+  name: loyalty
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: loyalty
+    spec:
+      containers:
+      - env:
+        - name: MQ_HOST
+          value: 129.40.117.225
+        - name: MQ_PORT
+          value: "1414"
+        - name: MQ_QM
+          value: MQZL
+        - name: MQ_QUEUE_NAME
+          value: NOTIFICATION
+        image: cc-z-hack.icp:8500/cc-z-hack/loyalty
+        name: loyalty
+        ports:
+        - containerPort: 9082
+        resources: {}
+      restartPolicy: Always
+status: {}

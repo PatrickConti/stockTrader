@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<mappingRoot xmlns="http://www.ibm.com/2008/ccl/Mapping" xmlns:map="http://www.ibm.com/zosConnect/2.0/mapping/POST" domainID="com.ibm.msl.mapping.xml" domainIDExtension="zosconnect" jsonWrapped="false" targetNamespace="http://www.ibm.com/zosConnect/2.0/mapping/POST" version="8.0.5.0">
+    <inlinedXMLSchema targetNamespace="http://www.ibm.com/zosConnect/2.0/mapping/JSON/output/POST"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:tns="http://www.ibm.com/zosConnect/2.0/mapping/JSON/output/POST" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ibm.com/zosConnect/2.0/mapping/JSON/output/POST">
+  <xsd:element name="ISTPOMAOperation" type="tns:ISTPOMAOperation"/>
+  <xsd:complexType name="ISTPOMAOperation">
+    <xsd:sequence>
+      <xsd:element name="ist_portfolio_manager" type="tns:ist_portfolio_manager"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ist_portfolio_manager">
+    <xsd:sequence>
+      <xsd:element name="action">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="2"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="debugTran">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="1"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="portfolioInfo" type="tns:portfolioInfo"/>
+      <xsd:element name="stockUpdate" type="tns:stockUpdate"/>
+      <xsd:element name="eyeCatch1">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="3"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element maxOccurs="32" minOccurs="32" name="stockInfo" type="tns:stockInfo"/>
+      <xsd:element name="eyeCatch2">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="3"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element maxOccurs="32" minOccurs="32" name="portfolioOutput" type="tns:portfolioOutput"/>
+      <xsd:element name="eyeCatch3">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="3"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="oldLoyalty">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="8"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="istreturnmsg">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="45"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="ist_flags">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="1"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="portfolioInfo">
+    <xsd:sequence>
+      <xsd:element name="owner">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="32"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="total">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:decimal">
+            <xsd:minInclusive value="-99999999999.99"/>
+            <xsd:maxInclusive value="99999999999.99"/>
+            <xsd:fractionDigits value="2"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="loyalty">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="8"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="stockUpdate">
+    <xsd:sequence>
+      <xsd:element name="symbol">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="8"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="shares">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="-2147483648"/>
+            <xsd:maxInclusive value="2147483647"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="price">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:decimal">
+            <xsd:minInclusive value="-999999999.99"/>
+            <xsd:maxInclusive value="999999999.99"/>
+            <xsd:fractionDigits value="2"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="total">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:decimal">
+            <xsd:minInclusive value="-99999999999.99"/>
+            <xsd:maxInclusive value="99999999999.99"/>
+            <xsd:fractionDigits value="2"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="dateQuoted">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="10"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="stockInfo">
+    <xsd:sequence>
+      <xsd:element name="symbol">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="8"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="shares">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="-2147483648"/>
+            <xsd:maxInclusive value="2147483647"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="price">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:decimal">
+            <xsd:minInclusive value="-999999999.99"/>
+            <xsd:maxInclusive value="999999999.99"/>
+            <xsd:fractionDigits value="2"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="total">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:decimal">
+            <xsd:minInclusive value="-99999999999.99"/>
+            <xsd:maxInclusive value="99999999999.99"/>
+            <xsd:fractionDigits value="2"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="dateQuoted">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="10"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="portfolioOutput">
+    <xsd:sequence>
+      <xsd:element name="owner">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="32"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="total">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:decimal">
+            <xsd:minInclusive value="-99999999999.99"/>
+            <xsd:maxInclusive value="99999999999.99"/>
+            <xsd:fractionDigits value="2"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="loyalty">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="8"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>
+]]></inlinedXMLSchema>
+    <inlinedXMLSchema targetNamespace="http://www.ibm.com/zosConnect/2.0/mapping/HTTP/input/POST"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:body="http://www.ibm.com/zosConnect/2.0/mapping/JSON/output/POST" xmlns:tns="http://www.ibm.com/zosConnect/2.0/mapping/HTTP/input/POST" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ibm.com/zosConnect/2.0/mapping/HTTP/input/POST">
+
+      <xsd:import namespace="http://www.ibm.com/zosConnect/2.0/mapping/JSON/output/POST" schemaLocation="../schema_0.xsd"/>
+
+      <xsd:element name="HTTPRequest" type="tns:HTTPRequestType"/>
+
+      <xsd:complexType name="HTTPRequestType">
+        <xsd:sequence>
+          <xsd:element name="Headers" type="tns:HeadersType"/>
+          <xsd:element name="PathParameters" type="tns:PathParametersType"/>
+          <xsd:element name="QueryParameters" type="tns:QueryParametersType"/>
+          <xsd:element name="Body" type="tns:BodyType"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="HeadersType">
+        <xsd:sequence>
+        	<xsd:element maxOccurs="1" minOccurs="0" name="Authorization" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="PathParametersType">
+        <xsd:sequence>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="QueryParametersType">
+        <xsd:sequence>
+            <xsd:element name="owner" type="xsd:string"/>
+            <xsd:element name="shares" type="xsd:string"/>
+            <xsd:element name="symbol" type="xsd:string"/>
+            <xsd:element name="quote" type="xsd:string"/>
+            <xsd:element name="dateQuoted" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="BodyType">
+        <xsd:sequence>
+          <xsd:element ref="body:ISTPOMAOperation"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+]]></inlinedXMLSchema>
+    <input inlinedXMLSchema="true" path="../schema_1.xsd" targetNamespace="http://www.ibm.com/zosConnect/2.0/mapping/HTTP/input/POST" var="rootInput"/>
+    <output inlinedXMLSchema="true" path="../schema_0.xsd" targetNamespace="http://www.ibm.com/zosConnect/2.0/mapping/JSON/output/POST" var="rootOutput"/>
+    <namespaces>
+        <namespace kind="supplement" prefix="in" uri="http://www.ibm.com/zosConnect/2.0/mapping/HTTP/input/POST"/>
+        <namespace kind="supplement" prefix="out" uri="http://www.ibm.com/zosConnect/2.0/mapping/JSON/output/POST"/>
+    </namespaces>
+    <mappingDeclaration name="POST.addStock">
+        <input namespace="http://www.ibm.com/zosConnect/2.0/mapping/HTTP/input/POST" path="$rootInput/HTTPRequest"/>
+        <output namespace="http://www.ibm.com/zosConnect/2.0/mapping/JSON/output/POST" path="$rootOutput/ISTPOMAOperation"/>
+        <passthrough>
+            <input path="Body/ISTPOMAOperation"/>
+            <output path="."/>
+            <updates>
+                <move>
+                    <input httpIn="query" path="QueryParameters/owner" xsdBuiltInOrDerivedSimpleType="http://www.w3.org/2001/XMLSchema:string"/>
+                    <output httpIn="body" path="ist_portfolio_manager/portfolioInfo/owner" xsdBuiltInOrDerivedSimpleType="http://www.w3.org/2001/XMLSchema:string"/>
+                </move>
+                <assign value="CS">
+                    <output httpIn="body" omitFromInterface="true" path="ist_portfolio_manager/action" xsdBuiltInOrDerivedSimpleType="http://www.w3.org/2001/XMLSchema:string"/>
+                </assign>
+                <remove>
+                    <output path="ist_portfolio_manager/stockInfo"/>
+                </remove>
+                <remove>
+                    <output httpIn="body" path="ist_portfolio_manager/istreturnmsg" xsdBuiltInOrDerivedSimpleType="http://www.w3.org/2001/XMLSchema:string"/>
+                </remove>
+                <remove>
+                    <output httpIn="body" path="ist_portfolio_manager/ist_flags" xsdBuiltInOrDerivedSimpleType="http://www.w3.org/2001/XMLSchema:string"/>
+                </remove>
+                <remove>
+                    <output httpIn="body" path="ist_portfolio_manager/portfolioInfo/total" xsdBuiltInOrDerivedSimpleType="http://www.w3.org/2001/XMLSchema:decimal"/>
+                </remove>
+                <remove>
+                    <output httpIn="body" path="ist_portfolio_manager/portfolioInfo/loyalty" xsdBuiltInOrDerivedSimpleType="http://www.w3.org/2001/XMLSchema:string"/>
+                </remove>
+                <move>
+                    <input httpIn="query" path="QueryParameters/shares" xsdBuiltInOrDerivedSimpleType="http://www.w3.org/2001/XMLSchema:string"/>
+                    <output httpIn="body" path="ist_portfolio_manager/stockUpdate/shares" xsdBuiltInOrDerivedSimpleType="http://www.w3.org/2001/XMLSchema:integer"/>
+                </move>
+                <move>
+                    <input httpIn="query" path="QueryParameters/symbol" xsdBuiltInOrDerivedSimpleType="http://www.w3.org/2001/XMLSchema:string"/>
+                    <output httpIn="body" path="ist_portfolio_manager/stockUpdate/symbol" xsdBuiltInOrDerivedSimpleType="http://www.w3.org/2001/XMLSchema:string"/>
+                </move>
+                <move>
+                    <input httpIn="query" path="QueryParameters/quote" xsdBuiltInOrDerivedSimpleType="http://www.w3.org/2001/XMLSchema:string"/>
+                    <output httpIn="body" path="ist_portfolio_manager/stockUpdate/price" xsdBuiltInOrDerivedSimpleType="http://www.w3.org/2001/XMLSchema:decimal"/>
+                </move>
+                <move>
+                    <input httpIn="query" path="QueryParameters/dateQuoted" xsdBuiltInOrDerivedSimpleType="http://www.w3.org/2001/XMLSchema:string"/>
+                    <output httpIn="body" path="ist_portfolio_manager/stockUpdate/dateQuoted" xsdBuiltInOrDerivedSimpleType="http://www.w3.org/2001/XMLSchema:string"/>
+                </move>
+                <assign value="0">
+                    <output httpIn="body" omitFromInterface="false" path="ist_portfolio_manager/stockUpdate/total" xsdBuiltInOrDerivedSimpleType="http://www.w3.org/2001/XMLSchema:decimal"/>
+                </assign>
+                <assign value="N">
+                    <output httpIn="body" omitFromInterface="false" path="ist_portfolio_manager/debugTran" xsdBuiltInOrDerivedSimpleType="http://www.w3.org/2001/XMLSchema:string"/>
+                </assign>
+                <remove>
+                    <output httpIn="body" path="ist_portfolio_manager/eyeCatch3" xsdBuiltInOrDerivedSimpleType="http://www.w3.org/2001/XMLSchema:string"/>
+                </remove>
+                <remove>
+                    <output httpIn="body" path="ist_portfolio_manager/eyeCatch2" xsdBuiltInOrDerivedSimpleType="http://www.w3.org/2001/XMLSchema:string"/>
+                </remove>
+                <remove>
+                    <output path="ist_portfolio_manager/portfolioOutput"/>
+                </remove>
+                <remove>
+                    <output httpIn="body" path="ist_portfolio_manager/eyeCatch1" xsdBuiltInOrDerivedSimpleType="http://www.w3.org/2001/XMLSchema:string"/>
+                </remove>
+                <remove>
+                    <output httpIn="body" path="ist_portfolio_manager/oldLoyalty" xsdBuiltInOrDerivedSimpleType="http://www.w3.org/2001/XMLSchema:string"/>
+                </remove>
+            </updates>
+        </passthrough>
+    </mappingDeclaration>
+</mappingRoot>

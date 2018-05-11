@@ -1,0 +1,383 @@
+{
+	"info": {
+		"_postman_id": "204c0d62-3af9-4f2e-a27b-e6095d7cd5b9",
+		"name": "zOS Connect Portfolio",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Portfolio",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "Fred",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "fredpwd",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://129.40.117.225:9443/trader/addPortfolio?owner=ivandov",
+					"protocol": "https",
+					"host": [
+						"129",
+						"40",
+						"117",
+						"225"
+					],
+					"port": "9443",
+					"path": [
+						"trader",
+						"addPortfolio"
+					],
+					"query": [
+						{
+							"key": "owner",
+							"value": "ivandov"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Portfolio",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "Fred",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "fredpwd",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://129.40.117.225:9443/trader/deletePortfolio/:owner",
+					"protocol": "https",
+					"host": [
+						"129",
+						"40",
+						"117",
+						"225"
+					],
+					"port": "9443",
+					"path": [
+						"trader",
+						"deletePortfolio",
+						":owner"
+					],
+					"variable": [
+						{
+							"key": "owner",
+							"value": "ivandov"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Portfolio",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "Fred",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "fredpwd",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://129.40.117.225:9443/trader/viewPortfolio/:owner",
+					"protocol": "https",
+					"host": [
+						"129",
+						"40",
+						"117",
+						"225"
+					],
+					"port": "9443",
+					"path": [
+						"trader",
+						"viewPortfolio",
+						":owner"
+					],
+					"variable": [
+						{
+							"key": "owner",
+							"value": "ivandov"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Portfolios",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "Fred",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "fredpwd",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://129.40.117.225:9443/trader/queryPortfolio",
+					"protocol": "https",
+					"host": [
+						"129",
+						"40",
+						"117",
+						"225"
+					],
+					"port": "9443",
+					"path": [
+						"trader",
+						"queryPortfolio"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Stock to Portfolio",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "Fred",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "fredpwd",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://129.40.117.225:9443/trader/addStock?owner=ivandov&symbol=IBM&shares=100&quote=160.91&dateQuoted=2018-04-17",
+					"protocol": "https",
+					"host": [
+						"129",
+						"40",
+						"117",
+						"225"
+					],
+					"port": "9443",
+					"path": [
+						"trader",
+						"addStock"
+					],
+					"query": [
+						{
+							"key": "owner",
+							"value": "ivandov"
+						},
+						{
+							"key": "symbol",
+							"value": "IBM"
+						},
+						{
+							"key": "shares",
+							"value": "100"
+						},
+						{
+							"key": "quote",
+							"value": "160.91"
+						},
+						{
+							"key": "dateQuoted",
+							"value": "2018-04-17"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Stock",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "Fred",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "fredpwd",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://129.40.117.225:9443/trader/deleteStock/:owner/:symbol",
+					"protocol": "https",
+					"host": [
+						"129",
+						"40",
+						"117",
+						"225"
+					],
+					"port": "9443",
+					"path": [
+						"trader",
+						"deleteStock",
+						":owner",
+						":symbol"
+					],
+					"variable": [
+						{
+							"key": "owner",
+							"value": "ivandov"
+						},
+						{
+							"key": "symbol",
+							"value": "IBM"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

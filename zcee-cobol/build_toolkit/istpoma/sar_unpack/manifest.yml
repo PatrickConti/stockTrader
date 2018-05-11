@@ -1,0 +1,27 @@
+---
+Manifest-Version: 1.0
+name: "istpoma"
+provider: "CICS-1.0"
+factoryPid: "cics"
+requestSchema:
+  value: "file:///schemas/istpomaRequest.json"
+  type: "JSONSchema"
+responseSchema:
+  value: "file:///schemas/istpomaResponse.json"
+  type: "JSONSchema"
+providerProperties:
+- propertyName: "program"
+  value: "ISTPOMA"
+  type: "STRING"
+- propertyName: "connectionRef"
+  value: "istpoma"
+  type: "STRING"
+- propertyName: "dataXformType"
+  value: "WSBIND"
+  type: "STRING"
+- propertyName: "bindfile"
+  value: "files/istpoma.wsbind"
+  type: "FILE"
+providerObjects: []
+version: "1.0"
+description: "IBM Stock Trader highlight IBM Private Cloud"

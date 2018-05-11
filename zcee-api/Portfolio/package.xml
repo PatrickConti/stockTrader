@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<zosConnectApi xmlns="http://www.ibm.com/zosConnect/2.0/zosConnectApi" id="istpoma">
+    <apiSpec title="istpoma" basePath="/trader" description="For online trading app using IBM Public Cloud." version="1.0.0">
+        <path relativePath="/addPortfolio">
+            <method type="POST" zosConnectServiceRef="istpoma" httpXformFile="api/addPortfolio/POST/mapping.xml" operationId="postIstpoma"/>
+        </path>
+        <path relativePath="/deletePortfolio/{owner}">
+            <method type="DELETE" zosConnectServiceRef="istpoma" httpXformFile="api/deletePortfolio/{owner}/DELETE/mapping.xml" operationId="deleteIstpoma"/>
+        </path>
+        <path relativePath="/viewPortfolio/{owner}">
+            <method type="GET" zosConnectServiceRef="istpoma" httpXformFile="api/viewPortfolio/{owner}/GET/mapping.xml" operationId="getIstpoma"/>
+        </path>
+        <path relativePath="/queryPortfolio">
+            <method type="GET" zosConnectServiceRef="istpoma" httpXformFile="api/queryPortfolio/GET/mapping.xml" operationId="getIstpoma1"/>
+        </path>
+        <path relativePath="/addStock">
+            <method type="POST" zosConnectServiceRef="istpoma" httpXformFile="api/addStock/POST/mapping.xml" operationId="postIstpoma1"/>
+        </path>
+        <path relativePath="/deleteStock/{owner}/{symbol}">
+            <method type="DELETE" zosConnectServiceRef="istpoma" httpXformFile="api/deleteStock/{owner}/{symbol}/DELETE/mapping.xml" operationId="deleteIstpoma1"/>
+        </path>
+        <apiDoc docType="SWAGGER">api-docs/swagger.json</apiDoc>
+    </apiSpec>
+</zosConnectApi>

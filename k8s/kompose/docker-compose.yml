@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  trader:
+    image: cc-z-hack/trader
+    ports:
+      - "9080:9080"
+    environment:
+      - ZCEE_URL=https://129.40.117.225:9443
+      - ZCEE_USER=HACKR99
+      - ZCEE_PASS=HACKR99
+      - ZCEE_BASE_PATH=/hackr99
+      - QUOTE_HOST=host.docker.internal
+      - LOYALTY_HOST=host.docker.internal
+  stock-quote:
+    image: cc-z-hack/stock-quote
+    ports:
+      - "9081:9081"
+    environment:
+      - QUANDL_KEY=_2VFhkQ446andCSWu2Mi
+  loyalty:
+    image: cc-z-hack/loyalty
+    ports:
+      - "9082:9082"
+    environment:
+      - MQ_HOST=129.40.117.225
+      - MQ_PORT=1414
+      - MQ_QM=MQZL
+      - MQ_QUEUE_NAME=hackr99
+  notification:
+    image: cc-z-hack/notification
+    ports:
+      - "9083:9083"
+    environment:
+      - FUNCTIONS_URL=https://openwhisk.ng.bluemix.net/api/v1/namespaces/zcloud_prod/actions/cc-z-hack/LoyaltyToSlack?blocking=true
+      - FUNCTIONS_API_KEY=b8f3e99e-8740-4afa-bf06-c740ad05ea82:J9gGMjk9f3KJomFKzDuAtLJmT6dOXsDVO0UnPFU19h09GwYnUrEX80GaN64K2Jqr
+      - MQ_HOST=129.40.117.225
+      - MQ_PORT=1414
+      - MQ_QM=MQZL
+      - MQ_QUEUE_NAME=hackr99

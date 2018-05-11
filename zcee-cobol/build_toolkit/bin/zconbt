@@ -1,0 +1,25 @@
+#!/bin/sh
+#
+# HZC3000 - z/OS Connect Enterprise Edition 3.0.6
+#
+# <copyright
+# notice="rm-source-program"
+# pids="5655-CE3"
+# years="2016,2017" >
+# Licensed Materials - Property of IBM
+#
+# Restricted Materials of IBM
+#
+# 5655-CE3
+#
+# (C) Copyright IBM Corp. 2016, 2017 
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with
+# IBM Corp.
+# </copyright>
+#
+ZCN_SCRIPT_DIR=$(dirname "$0")
+ZCN_SCRIPT=$(basename "$0")
+
+java -classpath "${ZCN_SCRIPT_DIR}"/../lib/\*:"${ZCN_SCRIPT_DIR}"/../plugins/\* com.ibm.zosconnect.buildtoolkit.cli.BuildToolkit $@

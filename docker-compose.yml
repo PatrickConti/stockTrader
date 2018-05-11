@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  trader:
+    image: cc-z-hack/trader-node
+    ports:
+      - "9080:9080"
+    environment:
+      - ZCEE_URL=https://129.40.117.225:9443
+      - ZCEE_USER=HACKR10
+      - ZCEE_PASS=HACKR10
+      - ZCEE_BASE_PATH=/HACKR10
+      - QUOTE_HOST=host.docker.internal
+      - LOYALTY_HOST=host.docker.internal
+  stock-quote:
+    image: cc-z-hack/stock-quote
+    ports:
+      - "9081:9081"
+    environment:
+      - QUANDL_KEY=_2VFhkQ446andCSWu2Mi
+  loyalty:
+    image: cc-z-hack/loyalty
+    ports:
+      - "9082:9082"
+    environment:
+      - MQ_HOST=129.40.117.225
+      - MQ_PORT=1414
+      - MQ_QM=MQZL
+      - MQ_QUEUE_NAME=HACKR10
+  notification:
+    image: cc-z-hack/notification
+    ports:
+      - "9083:9083"
+    environment:
+      - FUNCTIONS_URL=https://openwhisk.ng.bluemix.net/api/v1/namespaces/Patrick.Buoniconti%40ibm.com_dev/actions/cc-z-hack/PatrickSequence
+      - FUNCTIONS_API_KEY=41b6f490-81e6-4ccf-994c-5b3334bd2228:pbMFtcT1PhkAvPltem1YotwNKqGb3uSw0b0A40XJD8vOQRymXqOm3a3osZwRyDJR
+      - MQ_HOST=129.40.117.225
+      - MQ_PORT=1414
+      - MQ_QM=MQZL
+      - MQ_QUEUE_NAME=HACKR10

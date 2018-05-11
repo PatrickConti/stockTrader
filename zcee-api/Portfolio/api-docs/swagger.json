@@ -1,0 +1,1370 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "For online trading app using IBM Public Cloud.",
+    "version" : "1.0.0",
+    "title" : "istpoma"
+  },
+  "host" : "localhost:8080",
+  "basePath" : "/trader",
+  "schemes" : [ "https", "http" ],
+  "consumes" : [ "application/json" ],
+  "produces" : [ "application/json" ],
+  "paths" : {
+    "/addPortfolio" : {
+      "post" : {
+        "operationId" : "postIstpoma",
+        "parameters" : [ {
+          "name" : "owner",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "maxLength" : 32
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "postIstpoma_request",
+          "description" : "request body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/postIstpoma_request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "normal response",
+            "schema" : {
+              "$ref" : "#/definitions/postIstpoma_response_200"
+            }
+          }
+        }
+      }
+    },
+    "/addStock" : {
+      "post" : {
+        "operationId" : "postIstpoma1",
+        "parameters" : [ {
+          "name" : "symbol",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "maxLength" : 8
+        }, {
+          "name" : "dateQuoted",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "maxLength" : 10
+        }, {
+          "name" : "quote",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "shares",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "owner",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "maxLength" : 32
+        }, {
+          "in" : "body",
+          "name" : "postIstpoma1_request",
+          "description" : "request body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/postIstpoma1_request"
+          }
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "normal response",
+            "schema" : {
+              "$ref" : "#/definitions/postIstpoma1_response_200"
+            }
+          }
+        }
+      }
+    },
+    "/deletePortfolio/{owner}" : {
+      "delete" : {
+        "operationId" : "deleteIstpoma",
+        "parameters" : [ {
+          "name" : "owner",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "maxLength" : 32
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "deleteIstpoma_request",
+          "description" : "request body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/deleteIstpoma_request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "normal response",
+            "schema" : {
+              "$ref" : "#/definitions/deleteIstpoma_response_200"
+            }
+          }
+        }
+      }
+    },
+    "/deleteStock/{owner}/{symbol}" : {
+      "delete" : {
+        "operationId" : "deleteIstpoma1",
+        "parameters" : [ {
+          "name" : "symbol",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "maxLength" : 8
+        }, {
+          "name" : "owner",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "maxLength" : 32
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "deleteIstpoma1_request",
+          "description" : "request body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/deleteIstpoma1_request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "normal response",
+            "schema" : {
+              "$ref" : "#/definitions/deleteIstpoma1_response_200"
+            }
+          }
+        }
+      }
+    },
+    "/queryPortfolio" : {
+      "get" : {
+        "operationId" : "getIstpoma1",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "getIstpoma1_request",
+          "description" : "request body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/getIstpoma1_request"
+          }
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "normal response",
+            "schema" : {
+              "$ref" : "#/definitions/getIstpoma1_response_200"
+            }
+          }
+        }
+      }
+    },
+    "/viewPortfolio/{owner}" : {
+      "get" : {
+        "operationId" : "getIstpoma",
+        "parameters" : [ {
+          "name" : "owner",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "maxLength" : 32
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "getIstpoma_request",
+          "description" : "request body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/getIstpoma_request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "normal response",
+            "schema" : {
+              "$ref" : "#/definitions/getIstpoma_response_200"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "getIstpoma1_response_200" : {
+      "type" : "object",
+      "required" : [ "ISTPOMAOperationResponse" ],
+      "properties" : {
+        "ISTPOMAOperationResponse" : {
+          "type" : "object",
+          "properties" : {
+            "ist_portfolio_manager" : {
+              "type" : "object",
+              "properties" : {
+                "action" : {
+                  "type" : "string",
+                  "maxLength" : 2
+                },
+                "debugTran" : {
+                  "type" : "string",
+                  "maxLength" : 1
+                },
+                "portfolioInfo" : {
+                  "type" : "object",
+                  "properties" : {
+                    "owner" : {
+                      "type" : "string",
+                      "maxLength" : 32
+                    },
+                    "total" : {
+                      "type" : "number",
+                      "format" : "decimal",
+                      "minimum" : -99999999999.99,
+                      "maximum" : 99999999999.99
+                    },
+                    "loyalty" : {
+                      "type" : "string",
+                      "maxLength" : 8
+                    }
+                  },
+                  "required" : [ "loyalty", "owner", "total" ]
+                },
+                "stockUpdate" : {
+                  "type" : "object",
+                  "properties" : {
+                    "symbol" : {
+                      "type" : "string",
+                      "maxLength" : 8
+                    },
+                    "shares" : {
+                      "type" : "integer",
+                      "minimum" : -2147483648,
+                      "maximum" : 2147483647
+                    },
+                    "price" : {
+                      "type" : "number",
+                      "format" : "decimal",
+                      "minimum" : -999999999.99,
+                      "maximum" : 999999999.99
+                    },
+                    "total" : {
+                      "type" : "number",
+                      "format" : "decimal",
+                      "minimum" : -99999999999.99,
+                      "maximum" : 99999999999.99
+                    },
+                    "dateQuoted" : {
+                      "type" : "string",
+                      "maxLength" : 10
+                    }
+                  },
+                  "required" : [ "dateQuoted", "price", "shares", "symbol", "total" ]
+                },
+                "eyeCatch1" : {
+                  "type" : "string",
+                  "maxLength" : 3
+                },
+                "stockInfo" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "object",
+                    "properties" : {
+                      "symbol" : {
+                        "type" : "string",
+                        "maxLength" : 8
+                      },
+                      "shares" : {
+                        "type" : "integer",
+                        "minimum" : -2147483648,
+                        "maximum" : 2147483647
+                      },
+                      "price" : {
+                        "type" : "number",
+                        "format" : "decimal",
+                        "minimum" : -999999999.99,
+                        "maximum" : 999999999.99
+                      },
+                      "total" : {
+                        "type" : "number",
+                        "format" : "decimal",
+                        "minimum" : -99999999999.99,
+                        "maximum" : 99999999999.99
+                      },
+                      "dateQuoted" : {
+                        "type" : "string",
+                        "maxLength" : 10
+                      }
+                    },
+                    "required" : [ "dateQuoted", "price", "shares", "symbol", "total" ]
+                  },
+                  "maxItems" : 32,
+                  "minItems" : 32
+                },
+                "eyeCatch2" : {
+                  "type" : "string",
+                  "maxLength" : 3
+                },
+                "portfolioOutput" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "object",
+                    "properties" : {
+                      "owner" : {
+                        "type" : "string",
+                        "maxLength" : 32
+                      },
+                      "total" : {
+                        "type" : "number",
+                        "format" : "decimal",
+                        "minimum" : -99999999999.99,
+                        "maximum" : 99999999999.99
+                      },
+                      "loyalty" : {
+                        "type" : "string",
+                        "maxLength" : 8
+                      }
+                    },
+                    "required" : [ "loyalty", "owner", "total" ]
+                  },
+                  "maxItems" : 32,
+                  "minItems" : 32
+                },
+                "eyeCatch3" : {
+                  "type" : "string",
+                  "maxLength" : 3
+                },
+                "oldLoyalty" : {
+                  "type" : "string",
+                  "maxLength" : 8
+                },
+                "istreturnmsg" : {
+                  "type" : "string",
+                  "maxLength" : 45
+                },
+                "ist_flags" : {
+                  "type" : "string",
+                  "maxLength" : 1
+                }
+              },
+              "required" : [ "action", "debugTran", "eyeCatch1", "eyeCatch2", "eyeCatch3", "ist_flags", "istreturnmsg", "oldLoyalty", "portfolioInfo", "portfolioOutput", "stockInfo", "stockUpdate" ]
+            }
+          },
+          "required" : [ "ist_portfolio_manager" ]
+        }
+      },
+      "description" : "Response schema for the ISTPOMA JSON interface"
+    },
+    "deleteIstpoma_request" : {
+      "type" : "object",
+      "required" : [ "ISTPOMAOperation" ],
+      "properties" : {
+        "ISTPOMAOperation" : {
+          "type" : "object",
+          "properties" : {
+            "ist_portfolio_manager" : {
+              "type" : "object",
+              "properties" : {
+                "debugTran" : {
+                  "type" : "string",
+                  "maxLength" : 1,
+                  "default" : "N"
+                }
+              }
+            }
+          },
+          "required" : [ "ist_portfolio_manager" ]
+        }
+      },
+      "description" : "Request schema for the ISTPOMA JSON interface"
+    },
+    "postIstpoma1_response_200" : {
+      "type" : "object",
+      "required" : [ "ISTPOMAOperationResponse" ],
+      "properties" : {
+        "ISTPOMAOperationResponse" : {
+          "type" : "object",
+          "properties" : {
+            "ist_portfolio_manager" : {
+              "type" : "object",
+              "properties" : {
+                "action" : {
+                  "type" : "string",
+                  "maxLength" : 2
+                },
+                "debugTran" : {
+                  "type" : "string",
+                  "maxLength" : 1
+                },
+                "portfolioInfo" : {
+                  "type" : "object",
+                  "properties" : {
+                    "owner" : {
+                      "type" : "string",
+                      "maxLength" : 32
+                    },
+                    "total" : {
+                      "type" : "number",
+                      "format" : "decimal",
+                      "minimum" : -99999999999.99,
+                      "maximum" : 99999999999.99
+                    },
+                    "loyalty" : {
+                      "type" : "string",
+                      "maxLength" : 8
+                    }
+                  },
+                  "required" : [ "loyalty", "owner", "total" ]
+                },
+                "stockUpdate" : {
+                  "type" : "object",
+                  "properties" : {
+                    "symbol" : {
+                      "type" : "string",
+                      "maxLength" : 8
+                    },
+                    "shares" : {
+                      "type" : "integer",
+                      "minimum" : -2147483648,
+                      "maximum" : 2147483647
+                    },
+                    "price" : {
+                      "type" : "number",
+                      "format" : "decimal",
+                      "minimum" : -999999999.99,
+                      "maximum" : 999999999.99
+                    },
+                    "total" : {
+                      "type" : "number",
+                      "format" : "decimal",
+                      "minimum" : -99999999999.99,
+                      "maximum" : 99999999999.99
+                    },
+                    "dateQuoted" : {
+                      "type" : "string",
+                      "maxLength" : 10
+                    }
+                  },
+                  "required" : [ "dateQuoted", "price", "shares", "symbol", "total" ]
+                },
+                "eyeCatch1" : {
+                  "type" : "string",
+                  "maxLength" : 3
+                },
+                "stockInfo" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "object",
+                    "properties" : {
+                      "symbol" : {
+                        "type" : "string",
+                        "maxLength" : 8
+                      },
+                      "shares" : {
+                        "type" : "integer",
+                        "minimum" : -2147483648,
+                        "maximum" : 2147483647
+                      },
+                      "price" : {
+                        "type" : "number",
+                        "format" : "decimal",
+                        "minimum" : -999999999.99,
+                        "maximum" : 999999999.99
+                      },
+                      "total" : {
+                        "type" : "number",
+                        "format" : "decimal",
+                        "minimum" : -99999999999.99,
+                        "maximum" : 99999999999.99
+                      },
+                      "dateQuoted" : {
+                        "type" : "string",
+                        "maxLength" : 10
+                      }
+                    },
+                    "required" : [ "dateQuoted", "price", "shares", "symbol", "total" ]
+                  },
+                  "maxItems" : 32,
+                  "minItems" : 32
+                },
+                "eyeCatch2" : {
+                  "type" : "string",
+                  "maxLength" : 3
+                },
+                "portfolioOutput" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "object",
+                    "properties" : {
+                      "owner" : {
+                        "type" : "string",
+                        "maxLength" : 32
+                      },
+                      "total" : {
+                        "type" : "number",
+                        "format" : "decimal",
+                        "minimum" : -99999999999.99,
+                        "maximum" : 99999999999.99
+                      },
+                      "loyalty" : {
+                        "type" : "string",
+                        "maxLength" : 8
+                      }
+                    },
+                    "required" : [ "loyalty", "owner", "total" ]
+                  },
+                  "maxItems" : 32,
+                  "minItems" : 32
+                },
+                "eyeCatch3" : {
+                  "type" : "string",
+                  "maxLength" : 3
+                },
+                "oldLoyalty" : {
+                  "type" : "string",
+                  "maxLength" : 8
+                },
+                "istreturnmsg" : {
+                  "type" : "string",
+                  "maxLength" : 45
+                },
+                "ist_flags" : {
+                  "type" : "string",
+                  "maxLength" : 1
+                }
+              },
+              "required" : [ "action", "debugTran", "eyeCatch1", "eyeCatch2", "eyeCatch3", "ist_flags", "istreturnmsg", "oldLoyalty", "portfolioInfo", "portfolioOutput", "stockInfo", "stockUpdate" ]
+            }
+          },
+          "required" : [ "ist_portfolio_manager" ]
+        }
+      },
+      "description" : "Response schema for the ISTPOMA JSON interface"
+    },
+    "getIstpoma_request" : {
+      "type" : "object",
+      "required" : [ "ISTPOMAOperation" ],
+      "properties" : {
+        "ISTPOMAOperation" : {
+          "type" : "object",
+          "properties" : {
+            "ist_portfolio_manager" : {
+              "type" : "object",
+              "properties" : {
+                "debugTran" : {
+                  "type" : "string",
+                  "maxLength" : 1,
+                  "default" : "N"
+                }
+              }
+            }
+          },
+          "required" : [ "ist_portfolio_manager" ]
+        }
+      },
+      "description" : "Request schema for the ISTPOMA JSON interface"
+    },
+    "deleteIstpoma1_response_200" : {
+      "type" : "object",
+      "required" : [ "ISTPOMAOperationResponse" ],
+      "properties" : {
+        "ISTPOMAOperationResponse" : {
+          "type" : "object",
+          "properties" : {
+            "ist_portfolio_manager" : {
+              "type" : "object",
+              "properties" : {
+                "action" : {
+                  "type" : "string",
+                  "maxLength" : 2
+                },
+                "debugTran" : {
+                  "type" : "string",
+                  "maxLength" : 1
+                },
+                "portfolioInfo" : {
+                  "type" : "object",
+                  "properties" : {
+                    "owner" : {
+                      "type" : "string",
+                      "maxLength" : 32
+                    },
+                    "total" : {
+                      "type" : "number",
+                      "format" : "decimal",
+                      "minimum" : -99999999999.99,
+                      "maximum" : 99999999999.99
+                    },
+                    "loyalty" : {
+                      "type" : "string",
+                      "maxLength" : 8
+                    }
+                  },
+                  "required" : [ "loyalty", "owner", "total" ]
+                },
+                "stockUpdate" : {
+                  "type" : "object",
+                  "properties" : {
+                    "symbol" : {
+                      "type" : "string",
+                      "maxLength" : 8
+                    },
+                    "shares" : {
+                      "type" : "integer",
+                      "minimum" : -2147483648,
+                      "maximum" : 2147483647
+                    },
+                    "price" : {
+                      "type" : "number",
+                      "format" : "decimal",
+                      "minimum" : -999999999.99,
+                      "maximum" : 999999999.99
+                    },
+                    "total" : {
+                      "type" : "number",
+                      "format" : "decimal",
+                      "minimum" : -99999999999.99,
+                      "maximum" : 99999999999.99
+                    },
+                    "dateQuoted" : {
+                      "type" : "string",
+                      "maxLength" : 10
+                    }
+                  },
+                  "required" : [ "dateQuoted", "price", "shares", "symbol", "total" ]
+                },
+                "eyeCatch1" : {
+                  "type" : "string",
+                  "maxLength" : 3
+                },
+                "stockInfo" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "object",
+                    "properties" : {
+                      "symbol" : {
+                        "type" : "string",
+                        "maxLength" : 8
+                      },
+                      "shares" : {
+                        "type" : "integer",
+                        "minimum" : -2147483648,
+                        "maximum" : 2147483647
+                      },
+                      "price" : {
+                        "type" : "number",
+                        "format" : "decimal",
+                        "minimum" : -999999999.99,
+                        "maximum" : 999999999.99
+                      },
+                      "total" : {
+                        "type" : "number",
+                        "format" : "decimal",
+                        "minimum" : -99999999999.99,
+                        "maximum" : 99999999999.99
+                      },
+                      "dateQuoted" : {
+                        "type" : "string",
+                        "maxLength" : 10
+                      }
+                    },
+                    "required" : [ "dateQuoted", "price", "shares", "symbol", "total" ]
+                  },
+                  "maxItems" : 32,
+                  "minItems" : 32
+                },
+                "eyeCatch2" : {
+                  "type" : "string",
+                  "maxLength" : 3
+                },
+                "portfolioOutput" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "object",
+                    "properties" : {
+                      "owner" : {
+                        "type" : "string",
+                        "maxLength" : 32
+                      },
+                      "total" : {
+                        "type" : "number",
+                        "format" : "decimal",
+                        "minimum" : -99999999999.99,
+                        "maximum" : 99999999999.99
+                      },
+                      "loyalty" : {
+                        "type" : "string",
+                        "maxLength" : 8
+                      }
+                    },
+                    "required" : [ "loyalty", "owner", "total" ]
+                  },
+                  "maxItems" : 32,
+                  "minItems" : 32
+                },
+                "eyeCatch3" : {
+                  "type" : "string",
+                  "maxLength" : 3
+                },
+                "oldLoyalty" : {
+                  "type" : "string",
+                  "maxLength" : 8
+                },
+                "istreturnmsg" : {
+                  "type" : "string",
+                  "maxLength" : 45
+                },
+                "ist_flags" : {
+                  "type" : "string",
+                  "maxLength" : 1
+                }
+              },
+              "required" : [ "action", "debugTran", "eyeCatch1", "eyeCatch2", "eyeCatch3", "ist_flags", "istreturnmsg", "oldLoyalty", "portfolioInfo", "portfolioOutput", "stockInfo", "stockUpdate" ]
+            }
+          },
+          "required" : [ "ist_portfolio_manager" ]
+        }
+      },
+      "description" : "Response schema for the ISTPOMA JSON interface"
+    },
+    "postIstpoma_request" : {
+      "type" : "object",
+      "required" : [ "ISTPOMAOperation" ],
+      "properties" : {
+        "ISTPOMAOperation" : {
+          "type" : "object",
+          "properties" : {
+            "ist_portfolio_manager" : {
+              "type" : "object",
+              "properties" : {
+                "debugTran" : {
+                  "type" : "string",
+                  "maxLength" : 1,
+                  "default" : "N"
+                }
+              }
+            }
+          },
+          "required" : [ "ist_portfolio_manager" ]
+        }
+      },
+      "description" : "Request schema for the ISTPOMA JSON interface"
+    },
+    "postIstpoma_response_200" : {
+      "type" : "object",
+      "required" : [ "ISTPOMAOperationResponse" ],
+      "properties" : {
+        "ISTPOMAOperationResponse" : {
+          "type" : "object",
+          "properties" : {
+            "ist_portfolio_manager" : {
+              "type" : "object",
+              "properties" : {
+                "action" : {
+                  "type" : "string",
+                  "maxLength" : 2
+                },
+                "debugTran" : {
+                  "type" : "string",
+                  "maxLength" : 1
+                },
+                "portfolioInfo" : {
+                  "type" : "object",
+                  "properties" : {
+                    "owner" : {
+                      "type" : "string",
+                      "maxLength" : 32
+                    },
+                    "total" : {
+                      "type" : "number",
+                      "format" : "decimal",
+                      "minimum" : -99999999999.99,
+                      "maximum" : 99999999999.99
+                    },
+                    "loyalty" : {
+                      "type" : "string",
+                      "maxLength" : 8
+                    }
+                  },
+                  "required" : [ "loyalty", "owner", "total" ]
+                },
+                "stockUpdate" : {
+                  "type" : "object",
+                  "properties" : {
+                    "symbol" : {
+                      "type" : "string",
+                      "maxLength" : 8
+                    },
+                    "shares" : {
+                      "type" : "integer",
+                      "minimum" : -2147483648,
+                      "maximum" : 2147483647
+                    },
+                    "price" : {
+                      "type" : "number",
+                      "format" : "decimal",
+                      "minimum" : -999999999.99,
+                      "maximum" : 999999999.99
+                    },
+                    "total" : {
+                      "type" : "number",
+                      "format" : "decimal",
+                      "minimum" : -99999999999.99,
+                      "maximum" : 99999999999.99
+                    },
+                    "dateQuoted" : {
+                      "type" : "string",
+                      "maxLength" : 10
+                    }
+                  },
+                  "required" : [ "dateQuoted", "price", "shares", "symbol", "total" ]
+                },
+                "eyeCatch1" : {
+                  "type" : "string",
+                  "maxLength" : 3
+                },
+                "stockInfo" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "object",
+                    "properties" : {
+                      "symbol" : {
+                        "type" : "string",
+                        "maxLength" : 8
+                      },
+                      "shares" : {
+                        "type" : "integer",
+                        "minimum" : -2147483648,
+                        "maximum" : 2147483647
+                      },
+                      "price" : {
+                        "type" : "number",
+                        "format" : "decimal",
+                        "minimum" : -999999999.99,
+                        "maximum" : 999999999.99
+                      },
+                      "total" : {
+                        "type" : "number",
+                        "format" : "decimal",
+                        "minimum" : -99999999999.99,
+                        "maximum" : 99999999999.99
+                      },
+                      "dateQuoted" : {
+                        "type" : "string",
+                        "maxLength" : 10
+                      }
+                    },
+                    "required" : [ "dateQuoted", "price", "shares", "symbol", "total" ]
+                  },
+                  "maxItems" : 32,
+                  "minItems" : 32
+                },
+                "eyeCatch2" : {
+                  "type" : "string",
+                  "maxLength" : 3
+                },
+                "portfolioOutput" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "object",
+                    "properties" : {
+                      "owner" : {
+                        "type" : "string",
+                        "maxLength" : 32
+                      },
+                      "total" : {
+                        "type" : "number",
+                        "format" : "decimal",
+                        "minimum" : -99999999999.99,
+                        "maximum" : 99999999999.99
+                      },
+                      "loyalty" : {
+                        "type" : "string",
+                        "maxLength" : 8
+                      }
+                    },
+                    "required" : [ "loyalty", "owner", "total" ]
+                  },
+                  "maxItems" : 32,
+                  "minItems" : 32
+                },
+                "eyeCatch3" : {
+                  "type" : "string",
+                  "maxLength" : 3
+                },
+                "oldLoyalty" : {
+                  "type" : "string",
+                  "maxLength" : 8
+                },
+                "istreturnmsg" : {
+                  "type" : "string",
+                  "maxLength" : 45
+                },
+                "ist_flags" : {
+                  "type" : "string",
+                  "maxLength" : 1
+                }
+              },
+              "required" : [ "action", "debugTran", "eyeCatch1", "eyeCatch2", "eyeCatch3", "ist_flags", "istreturnmsg", "oldLoyalty", "portfolioInfo", "portfolioOutput", "stockInfo", "stockUpdate" ]
+            }
+          },
+          "required" : [ "ist_portfolio_manager" ]
+        }
+      },
+      "description" : "Response schema for the ISTPOMA JSON interface"
+    },
+    "postIstpoma1_request" : {
+      "type" : "object",
+      "required" : [ "ISTPOMAOperation" ],
+      "properties" : {
+        "ISTPOMAOperation" : {
+          "type" : "object",
+          "properties" : {
+            "ist_portfolio_manager" : {
+              "type" : "object",
+              "properties" : {
+                "debugTran" : {
+                  "type" : "string",
+                  "maxLength" : 1,
+                  "default" : "N"
+                },
+                "stockUpdate" : {
+                  "type" : "object",
+                  "properties" : {
+                    "total" : {
+                      "type" : "number",
+                      "format" : "decimal",
+                      "minimum" : -99999999999.99,
+                      "maximum" : 99999999999.99
+                    }
+                  }
+                }
+              },
+              "required" : [ "stockUpdate" ]
+            }
+          },
+          "required" : [ "ist_portfolio_manager" ]
+        }
+      },
+      "description" : "Request schema for the ISTPOMA JSON interface"
+    },
+    "deleteIstpoma_response_200" : {
+      "type" : "object",
+      "required" : [ "ISTPOMAOperationResponse" ],
+      "properties" : {
+        "ISTPOMAOperationResponse" : {
+          "type" : "object",
+          "properties" : {
+            "ist_portfolio_manager" : {
+              "type" : "object",
+              "properties" : {
+                "action" : {
+                  "type" : "string",
+                  "maxLength" : 2
+                },
+                "debugTran" : {
+                  "type" : "string",
+                  "maxLength" : 1
+                },
+                "portfolioInfo" : {
+                  "type" : "object",
+                  "properties" : {
+                    "owner" : {
+                      "type" : "string",
+                      "maxLength" : 32
+                    },
+                    "total" : {
+                      "type" : "number",
+                      "format" : "decimal",
+                      "minimum" : -99999999999.99,
+                      "maximum" : 99999999999.99
+                    },
+                    "loyalty" : {
+                      "type" : "string",
+                      "maxLength" : 8
+                    }
+                  },
+                  "required" : [ "loyalty", "owner", "total" ]
+                },
+                "stockUpdate" : {
+                  "type" : "object",
+                  "properties" : {
+                    "symbol" : {
+                      "type" : "string",
+                      "maxLength" : 8
+                    },
+                    "shares" : {
+                      "type" : "integer",
+                      "minimum" : -2147483648,
+                      "maximum" : 2147483647
+                    },
+                    "price" : {
+                      "type" : "number",
+                      "format" : "decimal",
+                      "minimum" : -999999999.99,
+                      "maximum" : 999999999.99
+                    },
+                    "total" : {
+                      "type" : "number",
+                      "format" : "decimal",
+                      "minimum" : -99999999999.99,
+                      "maximum" : 99999999999.99
+                    },
+                    "dateQuoted" : {
+                      "type" : "string",
+                      "maxLength" : 10
+                    }
+                  },
+                  "required" : [ "dateQuoted", "price", "shares", "symbol", "total" ]
+                },
+                "eyeCatch1" : {
+                  "type" : "string",
+                  "maxLength" : 3
+                },
+                "stockInfo" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "object",
+                    "properties" : {
+                      "symbol" : {
+                        "type" : "string",
+                        "maxLength" : 8
+                      },
+                      "shares" : {
+                        "type" : "integer",
+                        "minimum" : -2147483648,
+                        "maximum" : 2147483647
+                      },
+                      "price" : {
+                        "type" : "number",
+                        "format" : "decimal",
+                        "minimum" : -999999999.99,
+                        "maximum" : 999999999.99
+                      },
+                      "total" : {
+                        "type" : "number",
+                        "format" : "decimal",
+                        "minimum" : -99999999999.99,
+                        "maximum" : 99999999999.99
+                      },
+                      "dateQuoted" : {
+                        "type" : "string",
+                        "maxLength" : 10
+                      }
+                    },
+                    "required" : [ "dateQuoted", "price", "shares", "symbol", "total" ]
+                  },
+                  "maxItems" : 32,
+                  "minItems" : 32
+                },
+                "eyeCatch2" : {
+                  "type" : "string",
+                  "maxLength" : 3
+                },
+                "portfolioOutput" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "object",
+                    "properties" : {
+                      "owner" : {
+                        "type" : "string",
+                        "maxLength" : 32
+                      },
+                      "total" : {
+                        "type" : "number",
+                        "format" : "decimal",
+                        "minimum" : -99999999999.99,
+                        "maximum" : 99999999999.99
+                      },
+                      "loyalty" : {
+                        "type" : "string",
+                        "maxLength" : 8
+                      }
+                    },
+                    "required" : [ "loyalty", "owner", "total" ]
+                  },
+                  "maxItems" : 32,
+                  "minItems" : 32
+                },
+                "eyeCatch3" : {
+                  "type" : "string",
+                  "maxLength" : 3
+                },
+                "oldLoyalty" : {
+                  "type" : "string",
+                  "maxLength" : 8
+                },
+                "istreturnmsg" : {
+                  "type" : "string",
+                  "maxLength" : 45
+                },
+                "ist_flags" : {
+                  "type" : "string",
+                  "maxLength" : 1
+                }
+              },
+              "required" : [ "action", "debugTran", "eyeCatch1", "eyeCatch2", "eyeCatch3", "ist_flags", "istreturnmsg", "oldLoyalty", "portfolioInfo", "portfolioOutput", "stockInfo", "stockUpdate" ]
+            }
+          },
+          "required" : [ "ist_portfolio_manager" ]
+        }
+      },
+      "description" : "Response schema for the ISTPOMA JSON interface"
+    },
+    "getIstpoma1_request" : {
+      "type" : "object",
+      "required" : [ "ISTPOMAOperation" ],
+      "properties" : {
+        "ISTPOMAOperation" : {
+          "type" : "object",
+          "properties" : {
+            "ist_portfolio_manager" : {
+              "type" : "object",
+              "properties" : {
+                "debugTran" : {
+                  "type" : "string",
+                  "maxLength" : 1,
+                  "default" : "N"
+                },
+                "oldLoyalty" : {
+                  "type" : "string",
+                  "maxLength" : 8
+                }
+              },
+              "required" : [ "oldLoyalty" ]
+            }
+          },
+          "required" : [ "ist_portfolio_manager" ]
+        }
+      },
+      "description" : "Request schema for the ISTPOMA JSON interface"
+    },
+    "deleteIstpoma1_request" : {
+      "type" : "object",
+      "required" : [ "ISTPOMAOperation" ],
+      "properties" : {
+        "ISTPOMAOperation" : {
+          "type" : "object",
+          "properties" : {
+            "ist_portfolio_manager" : {
+              "type" : "object",
+              "properties" : {
+                "debugTran" : {
+                  "type" : "string",
+                  "maxLength" : 1,
+                  "default" : "N"
+                }
+              }
+            }
+          },
+          "required" : [ "ist_portfolio_manager" ]
+        }
+      },
+      "description" : "Request schema for the ISTPOMA JSON interface"
+    },
+    "getIstpoma_response_200" : {
+      "type" : "object",
+      "required" : [ "ISTPOMAOperationResponse" ],
+      "properties" : {
+        "ISTPOMAOperationResponse" : {
+          "type" : "object",
+          "properties" : {
+            "ist_portfolio_manager" : {
+              "type" : "object",
+              "properties" : {
+                "action" : {
+                  "type" : "string",
+                  "maxLength" : 2
+                },
+                "debugTran" : {
+                  "type" : "string",
+                  "maxLength" : 1
+                },
+                "portfolioInfo" : {
+                  "type" : "object",
+                  "properties" : {
+                    "owner" : {
+                      "type" : "string",
+                      "maxLength" : 32
+                    },
+                    "total" : {
+                      "type" : "number",
+                      "format" : "decimal",
+                      "minimum" : -99999999999.99,
+                      "maximum" : 99999999999.99
+                    },
+                    "loyalty" : {
+                      "type" : "string",
+                      "maxLength" : 8
+                    }
+                  },
+                  "required" : [ "loyalty", "owner", "total" ]
+                },
+                "stockUpdate" : {
+                  "type" : "object",
+                  "properties" : {
+                    "symbol" : {
+                      "type" : "string",
+                      "maxLength" : 8
+                    },
+                    "shares" : {
+                      "type" : "integer",
+                      "minimum" : -2147483648,
+                      "maximum" : 2147483647
+                    },
+                    "price" : {
+                      "type" : "number",
+                      "format" : "decimal",
+                      "minimum" : -999999999.99,
+                      "maximum" : 999999999.99
+                    },
+                    "total" : {
+                      "type" : "number",
+                      "format" : "decimal",
+                      "minimum" : -99999999999.99,
+                      "maximum" : 99999999999.99
+                    },
+                    "dateQuoted" : {
+                      "type" : "string",
+                      "maxLength" : 10
+                    }
+                  },
+                  "required" : [ "dateQuoted", "price", "shares", "symbol", "total" ]
+                },
+                "eyeCatch1" : {
+                  "type" : "string",
+                  "maxLength" : 3
+                },
+                "stockInfo" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "object",
+                    "properties" : {
+                      "symbol" : {
+                        "type" : "string",
+                        "maxLength" : 8
+                      },
+                      "shares" : {
+                        "type" : "integer",
+                        "minimum" : -2147483648,
+                        "maximum" : 2147483647
+                      },
+                      "price" : {
+                        "type" : "number",
+                        "format" : "decimal",
+                        "minimum" : -999999999.99,
+                        "maximum" : 999999999.99
+                      },
+                      "total" : {
+                        "type" : "number",
+                        "format" : "decimal",
+                        "minimum" : -99999999999.99,
+                        "maximum" : 99999999999.99
+                      },
+                      "dateQuoted" : {
+                        "type" : "string",
+                        "maxLength" : 10
+                      }
+                    },
+                    "required" : [ "dateQuoted", "price", "shares", "symbol", "total" ]
+                  },
+                  "maxItems" : 32,
+                  "minItems" : 32
+                },
+                "eyeCatch2" : {
+                  "type" : "string",
+                  "maxLength" : 3
+                },
+                "portfolioOutput" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "object",
+                    "properties" : {
+                      "owner" : {
+                        "type" : "string",
+                        "maxLength" : 32
+                      },
+                      "total" : {
+                        "type" : "number",
+                        "format" : "decimal",
+                        "minimum" : -99999999999.99,
+                        "maximum" : 99999999999.99
+                      },
+                      "loyalty" : {
+                        "type" : "string",
+                        "maxLength" : 8
+                      }
+                    },
+                    "required" : [ "loyalty", "owner", "total" ]
+                  },
+                  "maxItems" : 32,
+                  "minItems" : 32
+                },
+                "eyeCatch3" : {
+                  "type" : "string",
+                  "maxLength" : 3
+                },
+                "oldLoyalty" : {
+                  "type" : "string",
+                  "maxLength" : 8
+                },
+                "istreturnmsg" : {
+                  "type" : "string",
+                  "maxLength" : 45
+                },
+                "ist_flags" : {
+                  "type" : "string",
+                  "maxLength" : 1
+                }
+              },
+              "required" : [ "action", "debugTran", "eyeCatch1", "eyeCatch2", "eyeCatch3", "ist_flags", "istreturnmsg", "oldLoyalty", "portfolioInfo", "portfolioOutput", "stockInfo", "stockUpdate" ]
+            }
+          },
+          "required" : [ "ist_portfolio_manager" ]
+        }
+      },
+      "description" : "Response schema for the ISTPOMA JSON interface"
+    }
+  }
+}

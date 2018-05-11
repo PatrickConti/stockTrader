@@ -1,0 +1,23 @@
+      ******************************************************************
+      * DCLGEN TABLE(SA.PORTFOLIO)                                     *
+      *        LIBRARY(MCASILE.CICS.CPYBOOK(DCLPORT))                  *
+      *        ACTION(REPLACE)                                         *
+      *        LANGUAGE(COBOL)                                         *
+      *        QUOTE                                                   *
+      * ... IS THE DCLGEN COMMAND THAT MADE THE FOLLOWING STATEMENTS   *
+      ******************************************************************
+           EXEC SQL DECLARE SA.PORTFOLIO TABLE
+           ( OWNER                          CHAR(32) NOT NULL,
+             TOTAL                          DECIMAL(13, 2),
+             LOYALTY                        CHAR(8)
+           ) END-EXEC.
+      ******************************************************************
+      * COBOL DECLARATION FOR TABLE SA.PORTFOLIO                       *
+      ******************************************************************
+       01  DCLPORTFOLIO.
+           10 OWNER                PIC X(32).
+           10 TOTAL                PIC S9(11)V9(2) USAGE COMP-3.
+           10 LOYALTY              PIC X(8).
+      ******************************************************************
+      * THE NUMBER OF COLUMNS DESCRIBED BY THIS DECLARATION IS 3       *
+      ******************************************************************

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.1.0 (36652f6)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: stock-quote
+  name: stock-quote
+spec:
+  ports:
+  - name: "9081"
+    port: 9081
+    targetPort: 9081
+  selector:
+    io.kompose.service: stock-quote
+status:
+  loadBalancer: {}

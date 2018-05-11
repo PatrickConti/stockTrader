@@ -1,0 +1,29 @@
+      ******************************************************************
+      * DCLGEN TABLE(SA.STOCK)                                         *
+      *        LIBRARY(MCASILE.CICS.CPYBOOK(DCLSTOCK))                 *
+      *        ACTION(REPLACE)                                         *
+      *        LANGUAGE(COBOL)                                         *
+      *        QUOTE                                                   *
+      * ... IS THE DCLGEN COMMAND THAT MADE THE FOLLOWING STATEMENTS   *
+      ******************************************************************
+           EXEC SQL DECLARE SA.STOCK TABLE
+           ( OWNER                          CHAR(32) NOT NULL,
+             SYMBOL                         CHAR(8) NOT NULL,
+             SHARES                         INTEGER,
+             PRICE                          DECIMAL(11, 2),
+             TOTAL                          DECIMAL(13, 2),
+             DATEQUOTED                     DATE
+           ) END-EXEC.
+      ******************************************************************
+      * COBOL DECLARATION FOR TABLE SA.STOCK                           *
+      ******************************************************************
+       01  DCLSTOCK.
+           10 OWNER                PIC X(32).
+           10 SYMBOL               PIC X(8).
+           10 SHARES               PIC S9(9) USAGE COMP.
+           10 PRICE                PIC S9(9)V9(2) USAGE COMP-3.
+           10 TOTAL                PIC S9(11)V9(2) USAGE COMP-3.
+           10 DATEQUOTED           PIC X(10).
+      ******************************************************************
+      * THE NUMBER OF COLUMNS DESCRIBED BY THIS DECLARATION IS 6       *
+      ******************************************************************

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:ZosConnectServiceMapping xmlns:ns2="http://www.ibm.com/zosConnect/2.0/zosConnectServiceMapping" mappingSpecVersion="1.0">
+    <mappingContext basePath="/trader" relativePath="/addStock?owner&amp;symbol&amp;shares&amp;quote&amp;dateQuoted" method="POST" serviceName="istpoma"/>
+    <requestMessage>
+        <mappingRootModel type="MSL" location="api/addStock/POST/request.map"/>
+    </requestMessage>
+</ns2:ZosConnectServiceMapping>

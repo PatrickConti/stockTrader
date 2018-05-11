@@ -1,0 +1,41 @@
+<server description="loyalty">
+
+    <!-- Enable features -->
+    <featureManager>
+        <feature>microProfile-1.0</feature>
+        <feature>jndi-1.0</feature>
+        <feature>jca-1.7</feature>
+        <feature>jms-2.0</feature>
+        <feature>wmqJmsClient-2.0</feature>
+    </featureManager>
+
+    <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
+    <!-- <httpEndpoint httpPort="9082" httpsPort="9445" host="*" id="defaultHttpEndpoint"/> -->
+    <httpEndpoint httpPort="9082" httpsPort="9445" host="*" id="defaultHttpEndpoint"/>
+
+
+    <!-- Automatically expand WAR files and EAR files -->
+    <applicationManager autoExpand="true"/>
+
+    <variable name="wmqJmsClient.rar.location" value="/config/wmq.jmsra.rar"/>
+
+    <!-- <jmsQueueConnectionFactory id="NotificationQCF" jndiName="jms/NotificationQueueConnectionFactory">
+        <properties.wmqJms channel="SYSTEM.ADMIN.SVRCONN" hostName="129.40.117.225" port="1414" queueManager="MQZL" transportType="CLIENT"/>
+    </jmsQueueConnectionFactory>
+
+    <jmsQueue id="Notification" jndiName="jms/NotificationQueue">
+        <properties.wmqJms baseQueueManagerName="MQZL" baseQueueName="NOTIFICATION"/>
+    </jmsQueue> -->
+
+    <jmsQueueConnectionFactory id="NotificationQCF" jndiName="jms/NotificationQueueConnectionFactory">
+        <properties.wmqJms channel="SYSTEM.ADMIN.SVRCONN" hostName="${env.MQ_HOST}" port="${env.MQ_PORT}" queueManager="${env.MQ_QM}" transportType="CLIENT"/>
+    </jmsQueueConnectionFactory>
+
+    <jmsQueue id="Notification" jndiName="jms/NotificationQueue">
+        <properties.wmqJms baseQueueManagerName="${env.MQ_QM}" baseQueueName="${env.MQ_QUEUE_NAME}"/>
+    </jmsQueue>
+
+    <applicationMonitor updateTrigger="mbean"/>
+
+    <webApplication id="LoyaltyLevel" location="LoyaltyLevel.war" name="LoyaltyLevel" contextRoot="/loyalty"/>
+</server>
